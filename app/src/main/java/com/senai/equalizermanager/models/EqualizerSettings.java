@@ -1,6 +1,17 @@
 package com.senai.equalizermanager.models;
 
+import static androidx.room.ForeignKey.CASCADE;
+
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "equalizer_settings", foreignKeys = @ForeignKey(entity = User.class,
+        parentColumns = "id", childColumns = "userId", onDelete = ForeignKey.CASCADE))
 public class EqualizerSettings {
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+    private long id_user;
     private int low_freq;
     private int mid_freq;
     private int high_freq;

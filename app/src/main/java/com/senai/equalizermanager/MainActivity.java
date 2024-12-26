@@ -8,10 +8,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.senai.equalizermanager.controllers.UserController;
 
+//LISTA DE USUÁRIOS
+public class MainActivity extends AppCompatActivity {
+    UserController userController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userController = new UserController(getApplicationContext());
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);

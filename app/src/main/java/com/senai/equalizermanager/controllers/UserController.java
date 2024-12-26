@@ -4,9 +4,9 @@ import android.content.Context;
 
 import androidx.room.Room;
 
-import com.ramonpapes.soundmanager.dao.AppDatabase;
-import com.ramonpapes.soundmanager.dao.UserDao;
-import com.ramonpapes.soundmanager.models.User;
+import com.senai.equalizermanager.dao.AppDatabase;
+import com.senai.equalizermanager.dao.UserDao;
+import com.senai.equalizermanager.models.User;
 
 public class UserController {
     private User user;
@@ -15,15 +15,13 @@ public class UserController {
 
     public UserController(Context context){
         this.user = new User();
-        db = Room.databaseBuilder(context, AppDatabase.class, "database-name").build();
-
+        this.db = Room.databaseBuilder(context, AppDatabase.class, "database-name").build();
     }
 
     public User createUser(String username){
         user = new User();
         user.setUsername(username);
         db.userDao().insertAll(user);
-
         return user;
     }
 
