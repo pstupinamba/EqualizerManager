@@ -1,8 +1,10 @@
 package com.senai.equalizermanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.senai.equalizermanager.utils.Callback;
+import com.senai.equalizermanager.views.CreateUserActivity;
 import com.senai.equalizermanager.views.adapters.UserAdapter;
 import com.senai.equalizermanager.controllers.UserController;
 import com.senai.equalizermanager.models.User;
@@ -21,11 +24,15 @@ import com.senai.equalizermanager.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MainActivity extends AppCompatActivity {
     private UserController userController;
     private List<User> users = new ArrayList<>();
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
+    private Button btnAddUser;
+    private static int REQUEST_CREATE_USER = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         TextView tvEmptyListMessage = findViewById(R.id.tvEmptyListMessage);
 
+        btnAddUser = findViewById(R.id.btnAddUser);
+
+        btnAddUser.setOnClickListener(v ->{
+            Intent intent = new Intent(MainActivity.this, CreateUserActivity.class);
+            startActivityForResult(intent, REQUEST_CREATE_USER);
+//            startActivity(new Intent(MainActivity.this, CreateUserActivity.class));
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -43,10 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             userController = new UserController(getApplicationContext());
-            userController.createUser("User 100");
-            userController.createUser("User 200");
             getAllUsersAndUpdateUI(tvEmptyListMessage);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -84,6 +96,21 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CREATE_USER && resultCode == RESULT_OK) {
+            // Atualizar a lista de usuários ao retornar da CreateUserActivity
+            TextView tvEmptyListMessage = findViewById(R.id.tvEmptyListMessage);
+            try {
+                getAllUsersAndUpdateUI(tvEmptyListMessage);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
