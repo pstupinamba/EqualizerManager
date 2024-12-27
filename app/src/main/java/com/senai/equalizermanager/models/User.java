@@ -18,8 +18,7 @@ public class User {
         this.username = "";
     }
 
-    public User(int id, String username, EqualizerSettings preferences) {
-        this.id = id;
+    public User(String username) {
         this.username = username;
     }
 
