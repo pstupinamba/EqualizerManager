@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class User {
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private int id;
     @NonNull
     @ColumnInfo(name = "username")
     private String username;
@@ -18,16 +18,16 @@ public class User {
         this.username = "";
     }
 
-    public User(long id, String username, EqualizerSettings preferences) {
+    public User(int id, String username, EqualizerSettings preferences) {
         this.id = id;
         this.username = username;
     }
 
-    public long getId() {
+    public int getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

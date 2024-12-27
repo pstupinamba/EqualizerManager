@@ -9,4 +9,6 @@ import com.senai.equalizermanager.models.User;
 @Database(entities = {User.class, EqualizerSettings.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
+    public abstract EqualizerSettingsDao equalizerSettingsDao();
+    public abstract UserWithSettingsDao userWithSettingsDao();
 }

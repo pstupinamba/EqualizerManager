@@ -4,11 +4,8 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Transaction;
-
-import com.senai.equalizermanager.models.EqualizerSettings;
+import androidx.room.Update;
 import com.senai.equalizermanager.models.User;
-import com.senai.equalizermanager.models.UserWithSettings;
 
 import java.util.List;
 
@@ -28,6 +25,9 @@ public interface UserDao {
 
     @Insert
     void insertUser(User user);
+
+    @Update
+    void updateUser(User user);
 
     @Delete
     void delete(User user);
