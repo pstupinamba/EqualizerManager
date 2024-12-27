@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.users.clear();
                 MainActivity.this.users.addAll(users);
                 runOnUiThread(() -> {
-                    if (MainActivity.this.users.isEmpty()) {
+                    if (users.isEmpty()) {
                         tvEmptyListMessage.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     } else {
