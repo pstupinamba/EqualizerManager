@@ -18,7 +18,9 @@ public class UserController {
     private AppDatabase db;
 
     public UserController(Context context){
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "database-name").build();
+        this.db = Room.databaseBuilder(context, AppDatabase.class, "database-name")
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     public void createUser(String username) throws Exception{
@@ -54,13 +56,18 @@ public class UserController {
         }).start();
     }
 
-    public User getUserById(int id) throws Exception{
-        User user = db.userDao().getUserById(id);
-        if(user == null){
-            throw new Exception("Usuário não encontrado.");
-        }
-        return user;
+    public void getUserById(Callback<User> callback, int userId){
+        new Thread(() ->{
+            try{
+                User user = db.userDao().getUserById(userId);
+                callback.onSuccess(user);
+            }catch (Exception ex){
+                Log.e("Thread UserController", ex.getMessage());
+                callback.onFailure(ex);
+            }
+        }).start();
     }
+
 
     public void deleteUser(int id){
         User user = db.userDao().getUserById(id);

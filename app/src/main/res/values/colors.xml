@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="active_setting">#FFDD44</color>
+    <color name="default_setting">#FFFFFF</color>
 </resources>

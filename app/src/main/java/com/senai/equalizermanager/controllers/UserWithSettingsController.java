@@ -14,7 +14,9 @@ public class UserWithSettingsController {
 
 
     public UserWithSettingsController(Context context){
-        this.db = Room.databaseBuilder(context, AppDatabase.class, "database-name").build();
+        this.db = Room.databaseBuilder(context, AppDatabase.class, "database-name")
+                .fallbackToDestructiveMigration()
+                .build();
     }
 
     public List<UserWithSettings> getAllUserWithSettings(){

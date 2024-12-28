@@ -3,11 +3,13 @@ package com.senai.equalizermanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -17,12 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.senai.equalizermanager.utils.Callback;
 import com.senai.equalizermanager.views.CreateUserActivity;
+import com.senai.equalizermanager.views.EqualizerActivity;
 import com.senai.equalizermanager.views.adapters.UserAdapter;
 import com.senai.equalizermanager.controllers.UserController;
 import com.senai.equalizermanager.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        userController = new UserController(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerView);
         TextView tvEmptyListMessage = findViewById(R.id.tvEmptyListMessage);
 
@@ -57,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         try {
-            userController = new UserController(getApplicationContext());
             getAllUsersAndUpdateUI(tvEmptyListMessage);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -68,9 +72,6 @@ public class MainActivity extends AppCompatActivity {
         userController.getAllUsers(new Callback<List<User>>() {
             @Override
             public void onSuccess(List<User> users) {
-                for(User user : users){
-                    Log.d("User: ", "" + user.getId());
-                }
                 MainActivity.this.users.clear();
                 MainActivity.this.users.addAll(users);
                 runOnUiThread(() -> {
@@ -83,6 +84,13 @@ public class MainActivity extends AppCompatActivity {
                         userAdapter = new UserAdapter(MainActivity.this, users);
                         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                         recyclerView.setAdapter(userAdapter);
+
+                        userAdapter.setClickListener((view, position) -> {
+                            User user = users.get(position);
+                            Intent intent = new Intent(MainActivity.this, EqualizerActivity.class);
+                            intent.putExtra("userId", user.getId());
+                            startActivity(intent);
+                        });
                     }
                 });
             }
@@ -103,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CREATE_USER && resultCode == RESULT_OK) {
-            // Atualizar a lista de usuários ao retornar da CreateUserActivity
             TextView tvEmptyListMessage = findViewById(R.id.tvEmptyListMessage);
             try {
                 getAllUsersAndUpdateUI(tvEmptyListMessage);

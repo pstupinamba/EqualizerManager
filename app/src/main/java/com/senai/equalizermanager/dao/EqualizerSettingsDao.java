@@ -32,4 +32,14 @@ public interface EqualizerSettingsDao {
 
     @Query("DELETE FROM equalizer_settings WHERE id_user = :userId")
     void deleteSettingsByUserId(int userId);
+
+    @Query("UPDATE equalizer_settings SET isActive = 0 WHERE id_user = :userId")
+    void deactivateAllSettings(int userId);
+
+    @Query("UPDATE equalizer_settings SET isActive = 1 WHERE id = :settingId")
+    void activateSetting(int settingId);
+
+    @Query("SELECT * FROM equalizer_settings WHERE id_user = :userId AND isActive = 1 LIMIT 1")
+    EqualizerSettings getActiveSettingByUserId(int userId);
+
 }

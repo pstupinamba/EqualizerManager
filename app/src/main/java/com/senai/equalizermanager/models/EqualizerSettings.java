@@ -2,6 +2,7 @@ package com.senai.equalizermanager.models;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
@@ -15,17 +16,40 @@ public class EqualizerSettings {
     private int low_freq;
     private int mid_freq;
     private int high_freq;
+    private String name;
+    private boolean isActive;
+
 
     public EqualizerSettings(){
         this.low_freq = 0;
         this.mid_freq = 0;
         this.high_freq = 0;
+        this.name = "";
+        this.isActive = false;
     }
 
-    public EqualizerSettings(int low_freq, int mid_freq, int high_freq) {
+    public EqualizerSettings(int low_freq, int mid_freq, int high_freq, String name) {
         this.low_freq = low_freq;
         this.mid_freq = mid_freq;
         this.high_freq = high_freq;
+        this.name = name;
+        this.isActive = false;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public int getLow_freq() {

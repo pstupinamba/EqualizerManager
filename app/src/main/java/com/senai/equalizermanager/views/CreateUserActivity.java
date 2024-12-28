@@ -34,9 +34,8 @@ public class CreateUserActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 Toast.makeText(this, "Usuário " + username + " criado!", Toast.LENGTH_SHORT).show();
-                // Configura o resultado para a MainActivity
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("username", username); // Opcional, caso queira enviar o nome
+                resultIntent.putExtra("username", username);
                 setResult(RESULT_OK, resultIntent);
 
                 finish();

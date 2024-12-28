@@ -12,23 +12,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.senai.equalizermanager.R;
 import com.senai.equalizermanager.models.User;
+import com.senai.equalizermanager.utils.OnListItemClick;
 
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    private final Context context;
+//    private final Context context;
+    private LayoutInflater inflater;
     private final List<User> userList;
+    private OnListItemClick onListItemClick;
 
     public UserAdapter(Context context, List<User> userList) {
-        this.context = context;
         this.userList = userList;
+        this.inflater = LayoutInflater.from(context);
+    }
+
+    public void setClickListener(OnListItemClick onListItemClick){
+        this.onListItemClick = onListItemClick;
     }
 
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false);
+        View view = inflater.inflate(R.layout.item_user, parent, false);
         return new UserViewHolder(view);
     }
 
@@ -44,7 +51,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return userList.size();
     }
 
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder {
         TextView tvUsername;
         ImageView imgAvatar;
 
@@ -52,6 +59,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
+
+            itemView.setOnClickListener(view -> {
+                if(onListItemClick != null){
+                    onListItemClick.onClick(view, getAdapterPosition());
+                }
+            });
         }
     }
 }
