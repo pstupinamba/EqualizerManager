@@ -4,39 +4,115 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+    <!-- Linha para o RadioButton e Título -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome da Configuração"
-        android:textSize="16sp"
-        android:textColor="@android:color/black" />
-
-    <RadioButton
-        android:id="@+id/rbActive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_marginBottom="8dp"
+        android:gravity="start|center_vertical">
 
 
-    <TextView
-        android:id="@+id/tvLowFreq"
-        android:layout_width="wrap_content"
+        <RadioButton
+            android:id="@+id/rbActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Nome da Configuração -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome da Configuração"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Divisor entre o título e as frequências -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerHorizontal"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Frequências -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Low: 0"
-        android:textSize="16sp" />
+        android:layout_marginBottom="16dp">
 
-    <TextView
-        android:id="@+id/tvMidFreq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mid: 0"
-        android:textSize="16sp" />
+        <!-- Frequência Low -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tvLowLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Low"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/tvLowFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvHighFreq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="High: 0"
-        android:textSize="16sp" />
+        <!-- Frequência Mid -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tvMidLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mid"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/tvMidFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
+        <!-- Frequência High -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/tvHighLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="High"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/tvHighFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
