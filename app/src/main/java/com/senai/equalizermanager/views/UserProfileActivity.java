@@ -29,53 +29,73 @@ import com.senai.equalizermanager.utils.Callback;
 
 import java.util.Set;
 
+/**
+ * UserProfileActivity - Tela de perfil do usuário, exibindo o nome do usuário
+ * a configuração ativa(caso tenha) e o dispositivo Bluetooth conectado (caso exista).
+ */
+
 public class UserProfileActivity extends AppCompatActivity {
+    // Elementos da interface do usuário
     private TextView tvUserName, tvActiveSetting, tvBluetoothDevice;
+
+    //Controladores
     private UserController userController;
     private EqualizerSettingsController equalizerController;
+
+    //Adapter para trabalhar com o Bluetooth
     private BluetoothAdapter bluetoothAdapter;
+
+    //Objetos de Models User e EqualizerSettings
     private User user;
     private EqualizerSettings settings;
+
     private int userId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_user_profile); // Define o layout da Activity
 
+        //Inicialização dos elementos de UI
         tvUserName = findViewById(R.id.tvUserName);
         tvActiveSetting = findViewById(R.id.tvActiveSetting);
         tvBluetoothDevice = findViewById(R.id.tvBluetoothDevices);
 
+        //Inicializa o texto padrão
         tvBluetoothDevice.setText("Não há dispositivos bluetooth conectados.");
+        tvActiveSetting.setText("Não há configuração ativa.");
 
-
+        //Inicialização dos controladores e objetos.
         userController = new UserController(getApplicationContext());
         equalizerController = new EqualizerSettingsController(getApplicationContext());
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        user = new User();
-        settings = new EqualizerSettings();
 
+        //Recebe o ID do usuário através da Intent
         userId = getIntent().getIntExtra("userId", -1);
 
+        //Verifica se o ID é válido
         if (userId == -1) {
             finish();
             return;
         }
+        // Verifica a versão para acessar o Bluetooth caso a versão necessite
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BLUETOOTH_CONNECT}, 1);
             }
         }
 
+        // Carrega as informações do perfil do usuário
         loadUserProfile(userId);
 
+        // Filtro para monitorar a conexão e desconexão de dispostivos Bluetooth
         IntentFilter bluetoothFilter = new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED);
         bluetoothFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         registerReceiver(bluetoothReceiver, bluetoothFilter);
 
     }
 
+    // Broadcast Receiver para monitorar dispositivos Bluetooth conectados e desconectados
     private final BroadcastReceiver bluetoothReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -101,7 +121,12 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Carrega o perfil do usuário e a configuração ativa.
+     * @param userId
+     */
     private void loadUserProfile(int userId) {
+        // Carrega o perfil do usuário
         userController.getUserById(new Callback<User>() {
             @Override
             public void onSuccess(User result) {
@@ -116,6 +141,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.e("UserController", "Erro ao buscar o usuário: " + ex.getMessage());
             }
         }, userId);
+        // Carrega a configuração ativa do usuário
         equalizerController.getActiveSetting(userId, new Callback<EqualizerSettings>() {
             @Override
             public void onSuccess(EqualizerSettings result) {
@@ -131,6 +157,16 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Lida com o resultado da solicitação de permissões.
+     * @param requestCode O código da solicitação passado em {@link #requestPermissions(
+     * android.app.Activity, String[], int)}
+     * @param permissions As permissões solicitadas. Nunca é nulo.
+     * @param grantResults Os resultados da concessão para as permissões correspondentes,
+     *     que podem ser {@link android.content.pm.PackageManager#PERMISSION_GRANTED}
+     *     ou {@link android.content.pm.PackageManager#PERMISSION_DENIED}. Nunca é nulo.
+     *
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -145,10 +181,12 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Cancela o registro do BroadcastReceiver ao destruir a Activity
+     */
     @Override
     protected void onDestroy(){
         super.onDestroy();
-//        unregisterReceiver(activeSettingReceiver);
         unregisterReceiver(bluetoothReceiver);
     }
 

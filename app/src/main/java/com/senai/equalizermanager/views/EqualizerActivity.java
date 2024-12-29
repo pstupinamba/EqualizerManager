@@ -22,26 +22,32 @@ import com.senai.equalizermanager.views.adapters.SettingsAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * EqualizerActivity - Tela que exibe as configurações do equalizador de um usuário.
+ */
 public class EqualizerActivity extends AppCompatActivity {
-    private int userId;
-    private RecyclerView recyclerViewSettings;
-    private EqualizerSettingsController equalizerController;
-    private UserController userController;
-    private Button btnAddNewSetting;
-    private User user;
-    private static int REQUEST_CREATE_SETTING = 1;
-    private List<EqualizerSettings> settings;
-    SettingsAdapter adapter;
+    private int userId; // ID do usuário
+    private RecyclerView recyclerViewSettings; // RecyclerView para listar as configurações do equalizador
+    private EqualizerSettingsController equalizerController; // Controlador para gerenciar configurações do equalizador
+    private UserController userController; // Controlador para gerenciar o usuário
+    private Button btnAddNewSetting; // Botão para adicionar uma nova configuração
+    private User user; // Objeto que representa o usuário
+    private static int REQUEST_CREATE_SETTING = 1; // Código de requisição para criação de configuração
+    private List<EqualizerSettings> settings; // Lista de configurações de equalizador
+    SettingsAdapter adapter; // Adapter para o RecyclerView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equalizer);
 
+        // Inicialização da interface
         recyclerViewSettings = findViewById(R.id.recyclerViewSettings);
         recyclerViewSettings.setLayoutManager(new LinearLayoutManager(this));
         settings = new ArrayList<>();
         userId = getIntent().getIntExtra("userId", -1);
+
+        // Valida se o ID do usuário foi passado corretamente
         if (userId == -1) {
             runOnUiThread(() -> {
                 Toast.makeText(this, "Erro: ID do usuário não encontrado", Toast.LENGTH_SHORT).show();
@@ -49,9 +55,12 @@ public class EqualizerActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        // Configuração do Adapter para o RecyclerView
         adapter = new SettingsAdapter(getApplicationContext(), settings, userId, new SettingsAdapter.OnSettingActivatedListener() {
             @Override
             public void onSettingActivated(EqualizerSettings selectedSetting) {
+                // Ativa a configuração do equalizador selecionada
                 equalizerController.setActiveSetting(userId, selectedSetting.getId(), new Callback<Void>() {
                     @Override
                     public void onSuccess(Void result) {
@@ -78,36 +87,40 @@ public class EqualizerActivity extends AppCompatActivity {
         btnAddNewSetting = findViewById(R.id.btnAddNewSetting);
         TextView tvWelcome = findViewById(R.id.tvWelcome);
 
+        // Busca e exibe o usuário
         try {
             getUser(userId, tvWelcome);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        if(user != null){
-            runOnUiThread(() ->{
+        if (user != null) {
+            runOnUiThread(() -> {
                 tvWelcome.setText("Bem-vindo, " + user.getUsername());
             });
         }
 
+        // Ação do botão de adicionar nova configuração
         btnAddNewSetting.setOnClickListener(v -> {
             Intent intent = new Intent(EqualizerActivity.this, CreateEqualizerActivity.class);
             intent.putExtra("userId", userId);
             startActivityForResult(intent, REQUEST_CREATE_SETTING);
         });
 
+        // Carrega as configurações do equalizador do usuário
         try {
             getAllSettingsAndUpdateUI();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        // Configuração do ouvinte de clique nos itens do RecyclerView
         adapter.setClickListener((view, position) -> {
             EqualizerSettings selectedSetting = settings.get(position);
 
             equalizerController.setActiveSetting(userId, selectedSetting.getId(), new Callback<Void>() {
                 @Override
                 public void onSuccess(Void result) {
-                    runOnUiThread(() ->{
+                    runOnUiThread(() -> {
                         Toast.makeText(EqualizerActivity.this, "Configuração ativada: " + selectedSetting.getName(), Toast.LENGTH_SHORT).show();
                     });
                     getAllSettingsAndUpdateUI();
@@ -115,7 +128,7 @@ public class EqualizerActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Exception e) {
-                    runOnUiThread(() ->{
+                    runOnUiThread(() -> {
                         Toast.makeText(EqualizerActivity.this, "Erro ao ativar configuração: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
                 }
@@ -123,6 +136,9 @@ public class EqualizerActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para atualizar a lista de configurações de equalizador do usuário.
+     */
     private void getAllSettingsAndUpdateUI() {
         equalizerController.getSettingsByUserId(new Callback<List<EqualizerSettings>>() {
             @Override
@@ -131,7 +147,7 @@ public class EqualizerActivity extends AppCompatActivity {
                     if (settings.isEmpty()) {
                         Toast.makeText(EqualizerActivity.this, "Nenhuma configuração encontrada. Adicione uma nova!", Toast.LENGTH_SHORT).show();
                     } else {
-                        // Aqui, estamos passando o listener na criação do adapter
+                        // Atualiza o adapter com as configurações obtidas
                         adapter = new SettingsAdapter(EqualizerActivity.this, settings, userId, new SettingsAdapter.OnSettingActivatedListener() {
                             @Override
                             public void onSettingActivated(EqualizerSettings selectedSetting) {
@@ -169,8 +185,9 @@ public class EqualizerActivity extends AppCompatActivity {
         }, userId);
     }
 
-
-
+    /**
+     * Método para buscar o usuário pelo ID e exibir o nome na interface.
+     */
     private void getUser(int userId, TextView tvWelcome) {
         userController.getUserById(new Callback<User>() {
             @Override
@@ -189,7 +206,9 @@ public class EqualizerActivity extends AppCompatActivity {
         }, userId);
     }
 
-
+    /**
+     * Método para tratar o resultado da criação de uma nova configuração.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -202,5 +221,4 @@ public class EqualizerActivity extends AppCompatActivity {
             }
         }
     }
-
 }
