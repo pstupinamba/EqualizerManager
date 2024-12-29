@@ -44,9 +44,9 @@
 
             seekBarLowFreq.setMin(60);
             seekBarLowFreq.setMax(250);
-            seekBarMidFreq.setMin(250);
+            seekBarMidFreq.setMin(251);
             seekBarMidFreq.setMax(4000);
-            seekBarHighFreq.setMin(4000);
+            seekBarHighFreq.setMin(4001);
             seekBarHighFreq.setMax(16000);
             runOnUiThread(() ->{
                 seekBarLowFreq.setProgress(125);

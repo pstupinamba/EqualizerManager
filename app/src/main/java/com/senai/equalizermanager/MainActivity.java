@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.senai.equalizermanager.utils.Callback;
 import com.senai.equalizermanager.views.CreateUserActivity;
 import com.senai.equalizermanager.views.EqualizerActivity;
+import com.senai.equalizermanager.views.HomeActivity;
 import com.senai.equalizermanager.views.adapters.UserAdapter;
 import com.senai.equalizermanager.controllers.UserController;
 import com.senai.equalizermanager.models.User;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                         userAdapter.setClickListener((view, position) -> {
                             User user = users.get(position);
-                            Intent intent = new Intent(MainActivity.this, EqualizerActivity.class);
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             intent.putExtra("userId", user.getId());
                             startActivity(intent);
                         });
