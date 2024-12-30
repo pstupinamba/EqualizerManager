@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissão necessárias para utilizar configurações do Bluetooth (Utilizado para a implementação do Broadcast Receiver) -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<!--    Configurações da aplicação-->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,15 +17,59 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EqualizerManager"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
+
+        <!-- Configuração da Activity de Splash Screen -->
+        <activity android:name=".views.SplashActivity"
             android:exported="true">
             <intent-filter>
+                <!-- Define que esta é a Activity inicial (ponto de entrada do app) -->
                 <action android:name="android.intent.action.MAIN" />
-
+                <!-- Torna a Activity visível no launcher do dispositivo -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Configuração da Activity principal do aplicativo -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"> <!-- Permite que a Activity seja acessível externamente -->
+        </activity>
+        <!-- Activity para criar usuários; não é exportada, ou seja, não pode ser acessada externamente -->
+        <activity
+            android:name=".views.CreateUserActivity"
+            android:exported="false">
+        </activity>
+        <!-- Activity para configurar o equalizador; não é exportada -->
+        <activity
+            android:name=".views.EqualizerActivity"
+            android:exported="false">
+        </activity>
+        <!-- Activity para criar um novo equalizador; não é exportada -->
+        <activity
+            android:name=".views.CreateEqualizerActivity"
+            android:exported="false">
+        </activity>
+
+        <!-- Tela inicial após o login; não é exportada -->
+        <activity
+            android:name=".views.HomeActivity"
+            android:exported="false">
+        </activity>
+        <!-- Tela para exibir o perfil do usuário; não é exportada -->
+        <activity
+            android:name=".views.UserProfileActivity"
+            android:exported="false">
+        </activity>
+        <!-- Receiver para monitorar eventos Bluetooth -->
+        <receiver
+            android:name=".receivers.BluetoothReceiver"
+            android:exported="true"> <!-- Permite que o receiver receba eventos externos -->
+            <intent-filter>
+                <!-- Ação para quando um dispositivo Bluetooth for conectado -->
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <!-- Ação para quando um dispositivo Bluetooth for desconectado -->
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
