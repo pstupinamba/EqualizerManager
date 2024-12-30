@@ -43,6 +43,17 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     dependencies {
+
+
+        // Dependência do Mockito
+        testImplementation ("org.mockito:mockito-core:4.0.0")
+        // Dependência do JUnit
+        testImplementation ("junit:junit:4.13.2")
+        // Dependência do AndroidX Test para testes em Android
+        testImplementation ("androidx.test.ext:junit:1.1.3")
+        testImplementation ("androidx.test:core:1.4.0")
+
+	//Dependência Room
         val room_version = "2.6.1"
 
         implementation("androidx.room:room-runtime:$room_version")
