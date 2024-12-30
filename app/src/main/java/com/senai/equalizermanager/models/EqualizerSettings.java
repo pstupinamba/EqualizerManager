@@ -1,26 +1,39 @@
 package com.senai.equalizermanager.models;
 
 import static androidx.room.ForeignKey.CASCADE;
-
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "equalizer_settings", foreignKeys = @ForeignKey(entity = User.class,
-        parentColumns = "id", childColumns = "id_user", onDelete = ForeignKey.CASCADE))
+/**
+ * Classe que representa a entidade "EqualizerSettings" no banco de dados Room.
+ * Armazena as configurações do equalizador associadas a um usuário.
+ */
+@Entity(
+        tableName = "equalizer_settings",
+        foreignKeys = @ForeignKey(
+                entity = User.class, // Classe de referência (tabela "User")
+                parentColumns = "id", // Coluna na tabela "User" que serve de chave primária
+                childColumns = "id_user", // Coluna nesta tabela que é chave estrangeira
+                onDelete = CASCADE // Define que ao excluir o usuário, as configurações relacionadas também serão excluídas
+        )
+)
 public class EqualizerSettings {
+
     @PrimaryKey(autoGenerate = true)
-    private int id;
-    private int id_user;
-    private int low_freq;
-    private int mid_freq;
-    private int high_freq;
-    private String name;
-    private boolean isActive;
+    private int id; // ID único da configuração (gerado automaticamente)
 
+    private int id_user; // ID do usuário associado (chave estrangeira)
+    private int low_freq; // Valor da frequência baixa
+    private int mid_freq; // Valor da frequência média
+    private int high_freq; // Valor da frequência alta
+    private String name; // Nome da configuração
+    private boolean isActive; // Indica se esta configuração está ativa
 
-    public EqualizerSettings(){
+    /**
+     * Construtor padrão inicializando valores com padrões.
+     */
+    public EqualizerSettings() {
         this.low_freq = 0;
         this.mid_freq = 0;
         this.high_freq = 0;
@@ -28,6 +41,14 @@ public class EqualizerSettings {
         this.isActive = false;
     }
 
+    /**
+     * Construtor para inicializar configurações com valores específicos.
+     *
+     * @param low_freq  valor da frequência baixa.
+     * @param mid_freq  valor da frequência média.
+     * @param high_freq valor da frequência alta.
+     * @param name      nome da configuração.
+     */
     public EqualizerSettings(int low_freq, int mid_freq, int high_freq, String name) {
         this.low_freq = low_freq;
         this.mid_freq = mid_freq;
@@ -35,6 +56,8 @@ public class EqualizerSettings {
         this.name = name;
         this.isActive = false;
     }
+
+    // Métodos getter e setter para acessar e modificar os atributos da entidade.
 
     public String getName() {
         return name;
@@ -64,14 +87,6 @@ public class EqualizerSettings {
         return mid_freq;
     }
 
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
-    }
-
     public void setMid_freq(int mid_freq) {
         this.mid_freq = mid_freq;
     }
@@ -82,6 +97,14 @@ public class EqualizerSettings {
 
     public void setHigh_freq(int high_freq) {
         this.high_freq = high_freq;
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
     public int getId() {
