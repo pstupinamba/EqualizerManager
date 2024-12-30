@@ -50,7 +50,7 @@ public class UserController {
                 List<User> users = db.userDao().getAll();
                 callback.onSuccess(users);
             } catch (Exception ex) {
-                Log.e("Thread UserController", ex.getMessage());
+                Log.i("Thread UserController", ex.getMessage());
                 callback.onFailure(ex);
             }
         }).start();
@@ -62,7 +62,7 @@ public class UserController {
                 User user = db.userDao().getUserById(userId);
                 callback.onSuccess(user);
             }catch (Exception ex){
-                Log.e("Thread UserController", ex.getMessage());
+                Log.i("Thread UserController", ex.getMessage());
                 callback.onFailure(ex);
             }
         }).start();
