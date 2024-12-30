@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CREATE_USER && resultCode == RESULT_OK) {
-            TextView tvEmptyListMessage = findViewById(R.id.tvEmptyListMessage);
             try {
                 getAllUsersAndUpdateUI();
             } catch (Exception e) {
