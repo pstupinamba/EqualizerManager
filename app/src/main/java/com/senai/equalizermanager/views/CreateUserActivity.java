@@ -18,6 +18,11 @@ public class CreateUserActivity extends AppCompatActivity {
     private Button btnSaveUser; // Botão para salvar o usuário
     private UserController userController; // Controlador para gerenciar operações relacionadas a usuários
 
+    /**
+     * Método chamado quando a Activity é criada.
+     * Inicializa os componentes de interface e configura os manipuladores.
+     * @param savedInstanceState Contém o estado salvo da Activity, caso exista.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

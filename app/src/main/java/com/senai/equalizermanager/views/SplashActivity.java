@@ -16,6 +16,12 @@ public class SplashActivity extends AppCompatActivity {
     // Constante para definir o tempo de exibição da tela de splash (2 segundos)
     private static final int SPLASH_DELAY = 2000;
 
+    /**
+     * Método de ciclo de vida chamado quando a Activity é criada.
+     * Aqui, a SplashActivity é configurada e exibe uma tela de introdução por um tempo definido.
+     *
+     * @param savedInstanceState Contém o estado salvo da Activity, caso exista.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

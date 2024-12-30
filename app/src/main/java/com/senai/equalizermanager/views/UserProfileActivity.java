@@ -51,6 +51,13 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private int userId;
 
+    /**
+     * Método de ciclo de vida chamado quando a Activity é criada.
+     * Configura a interface de usuário, inicializa os controladores e objetos necessários,
+     * e realiza o carregamento das informações do perfil do usuário.
+     *
+     * @param savedInstanceState Contém o estado salvo da Activity, caso exista.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -182,7 +189,8 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Cancela o registro do BroadcastReceiver ao destruir a Activity
+     * Método de ciclo de vida chamado quando a Activity é destruída.
+     * Cancela o registro do BroadcastReceiver para evitar vazamento de memória.
      */
     @Override
     protected void onDestroy(){

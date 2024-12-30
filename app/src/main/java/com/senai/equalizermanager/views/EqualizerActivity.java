@@ -36,6 +36,11 @@ public class EqualizerActivity extends AppCompatActivity {
     private List<EqualizerSettings> settings; // Lista de configurações de equalizador
     SettingsAdapter adapter; // Adapter para o RecyclerView
 
+    /**
+     * Método chamado quando a Activity é criada.
+     * Inicializa os componentes de interface, configura os manipuladores de eventos e carrega as configurações de equalização do usuário.
+     * @param savedInstanceState Contém o estado salvo da Activity, caso exista.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

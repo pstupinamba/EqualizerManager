@@ -25,6 +25,12 @@ public class CreateEqualizerActivity extends AppCompatActivity {
     private Button btnSave; // Botão para salvar a configuração
     private EditText etName; // Campo de texto para o nome da configuração
 
+    /**
+     * Método chamado quando a Activity é criada. Inicializa os componentes da interface do usuário
+     * e configura os parâmetros das barras deslizantes para o equalizador, além de configurar
+     * os ouvintes de eventos.
+     * @param savedInstanceState Estado salvo da Activity, caso haja.
+     */
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

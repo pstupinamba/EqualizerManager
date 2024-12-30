@@ -37,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
     private static int REQUEST_CREATE_USER = 1; // Código de solicitação para criar um usuário
     TextView tvEmptyListMessage; // Text View que informa se não existir usuários salvos no banco de dados.
 
+    /**
+     * Método de ciclo de vida chamado quando a Activity é criada.
+     * Realiza as configurações iniciais da tela, como configurar o controlador de usuários,
+     * inicializar componentes de UI e definir ações de clique nos botões.
+     *
+     * @param savedInstanceState Se a Activity foi recriada (por exemplo, após uma rotação de tela),
+     *                           contém o estado anterior da Activity.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,13 +118,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     /**
-     * Gerencia os resultados das atividades iniciadas.
+     * Método de ciclo de vida chamado quando a Activity retorna um resultado de outra Activity.
+     * Este método gerencia os resultados retornados da tela de criação de usuário, atualizando
+     * a lista de usuários na interface.
      *
-     * @param requestCode Código de solicitação da atividade.
-     * @param resultCode  Código de resultado retornado pela atividade.
-     * @param data        Dados retornados pela atividade.
+     * @param requestCode Código de solicitação que foi enviado para a outra Activity.
+     * @param resultCode Código de resultado retornado pela outra Activity.
+     * @param data Dados retornados pela outra Activity.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

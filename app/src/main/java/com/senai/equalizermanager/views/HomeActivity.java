@@ -22,6 +22,11 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnChooseConfiguration, btnCreateConfiguration, btnChangeUser, btnUserProfile; // Botões para navegação
     private TextView tvWelcome; // TextView para exibir a mensagem de boas-vindas
 
+    /**
+     * Método chamado quando a Activity é criada.
+     * Inicializa os componentes de interface, configura os manipuladores de eventos e carrega as configurações do equalizador para o usuário.
+     * @param savedInstanceState Contém o estado salvo da Activity, caso exista.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +105,10 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método chamado quando a Activity é retomada.
+     * Atualiza as configurações do equalizador sempre que a Activity retorna ao primeiro plano.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -135,9 +144,12 @@ public class HomeActivity extends AppCompatActivity {
         }, userId);
     }
 
+    /**
+     * Método chamado quando a Activity é destruída.
+     * É utilizado para liberar recursos ou fazer limpeza, se necessário.
+     */
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        // Adicione código de limpeza aqui, caso necessário.
     }
 }
